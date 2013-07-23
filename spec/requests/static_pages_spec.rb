@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe "Static pages" do
+  before do
+    @title_base = "Ruby on Rails Tutorial Sample App"
+  end
+  
   describe "Home page" do
     it "should have the content 'Sample App' " do
       visit '/static_pages/home'
@@ -9,7 +13,7 @@ describe "Static pages" do
     
     it "should have the right title" do
       visit '/static_pages/home'
-      page.title.should == "Ruby on Rails Tutorial Sample App | Home"
+      page.title.should == "#{@title_base} | Home"
     end
   end
   
@@ -21,7 +25,7 @@ describe "Static pages" do
     
     it "should have the right title" do
       visit '/static_pages/help'
-      page.title.should == "Ruby on Rails Tutorial Sample App | Help"
+      page.title.should == "#{@title_base} | Help"
     end
   end
   
@@ -33,7 +37,24 @@ describe "Static pages" do
     
     it "should have the right title" do
       visit '/static_pages/about'
-      page.title.should == 'Ruby on Rails Tutorial Sample App | About Us'
+      page.title.should == "#{@title_base} | About Us"
+    end
+  end
+  
+  describe "Contact page" do
+    it "should have the content 'Contact' " do
+      visit '/static_pages/contact'
+      page.should have_selector('h1', 'Contact')
+    end
+    
+    it "should have my email address" do
+      visit '/static_pages/contact'
+      page.should have_selector('h1', 'imurchie@gmail.com')
+    end
+    
+    it "should have the right title" do
+      visit '/static_pages/contact'
+      page.title.should == "#{@title_base} | Contact"
     end
   end
 end
