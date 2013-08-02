@@ -10,6 +10,8 @@
 #
 
 class User < ActiveRecord::Base
+  has_many :microposts, dependent: :destroy
+
   before_save do |user|
     user.email.downcase!
   end
@@ -23,6 +25,10 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
+
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
 
 
   def self.new_remember_token
